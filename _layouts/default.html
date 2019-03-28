@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+    <head>
+        <meta charset="utf-8">
+        {% if page.title %}
+        <title>{{ page.title }} - {{ site.title }}</title>
+        {% else %}
+        <title>{{ site.title }} - {{ site.subtitle }}</title>
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ site.baseurl }}/images/fav.png" rel="icon" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="{{ site.baseurl }}/images/fav.png" />
+        {%- seo -%}
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono|IBM+Plex+Sans|IBM+Plex+Serif" rel="stylesheet"> 
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/pure-min.css"/>
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="{{ site.baseurl }}/css/grids-responsive-old-ie-min.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/grids-responsive-min.css">
+        <!--<![endif]-->
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/devblog.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/pygment-emacs-highlight.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        {%- feed_meta -%}
+    </head>
+
+    <body>
+
+        {%- include header.html -%}
+
+        <main class="page-content" aria-label="Content">
+            <div class="wrapper">
+                {{ content }}
+            </div>
+        </main>
+
+        {%- include footer.html -%}
+
+        {% if site.google_analytics_code != "" %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics_code }}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+         gtag('config', '{{ site.google_analytics_code }}');
+        </script>
+        {% endif %}
+    </body>
+
+</html>

@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<div class="container">
+    <div class="blog-list content">
+        <table>
+            {% for post in site.posts %}
+            <tr>
+                <td class="date">{{ post.date | date: "%b %d, %Y" }}</td>
+                <td><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+---
+layout: default
+---
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+        <p class="post-meta">Posted on
+            <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+                {%- assign date_format = site.minima.date_format | default: " %b %-d, %Y" -%}
+                {{ page.date | date: date_format }}
+            </time>
+            {%- if page.author -%}
+            {% assign author = site.data.authors[page.author] %}
+            by
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span class="p-author h-card" itemprop="name">
+                    <a href="{{ site.baseurl }}/author/{{ page.author }}">{{ author.name | escape }}</a>
+                </span>
+            </span>
+            {%- endif -%}            
+        </p>
+    </header>
+
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-4-5">
+            <div class="content e-content" itemprop="articleBody">
+                {{ content }}
+            </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-5">
+            {%- if page.author -%}
+            {% assign author = site.data.authors[page.author] %}
+            <div class="author-box">
+                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                    <span class="p-author h-card" itemprop="name">
+                        <a href="{{ site.baseurl }}/author/{{ page.author }}">{{ author.name | escape }}</a>
+                    </span>
+                </span>
+                <img src="https://github.com/{{ page.author }}.png?size=150px">
+                <p>{{ author.bio }}</p>
+
+                <p>
+                    <a href="https://github.com/{{ page.author }}">github </a>
+                    {%- if author.site != "" -%}
+                    • <a href="{{ author.site }}">web </a>
+                    {%- endif -%}
+                    {%- if author.twitter != "" -%}
+                    • <a href="https://twitter.com/{{ author.twitter }}">twitter </a>
+                    {%- endif -%}
+                </p>
+            </div>
+            {%- endif -%}
+        </div>
+    </div>
+
+    {%- if site.disqus_name and page.comments != false -%}
+    <div id="disqus_thread"></div>
+    <script>
+     var disqus_config = function () {
+         this.page.url = '{{ page.url | absolute_url }}';
+         this.page.identifier = '{{ page.url | absolute_url }}';
+     };
+     (function() {
+         var d = document, s = d.createElement('script');
+         s.src = 'https://{{ site.disqus_name }}.disqus.com/embed.js';
+         s.setAttribute('data-timestamp', +new Date());
+         (d.head || d.body).appendChild(s);
+     })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    {%- endif -%}
+
+    <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>

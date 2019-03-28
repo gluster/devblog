@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+from datetime import datetime
+import os
+import re
+from string import Template
+import sys
+
+
+BLOGDIR = "_posts/"
+BLOGTMPL = """---
+layout: post
+title: ${title}
+author: <Write your Github user ID>
+---
+
+Write your Blog content here
+"""
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: ./newblog <title>")
+        sys.exit(1)
+
+    blog_title = sys.argv[1]
+    blog_url = blog_title.lower()
+    blog_url = re.sub(r'[^a-z0-9]+', '-', blog_url).strip('-')
+    blog_url = re.sub(r'[-]+', '-', blog_url)
+    filename = datetime.now().strftime(BLOGDIR + "%Y-%m-%d-" + blog_url + ".md")
+
+    # Validate if same URL is used earlier
+    for blog_file in os.listdir(BLOGDIR):
+        if blog_file.endswith(blog_url+".md"):
+            print("Blog file with same Title/URL exist(%s)" % blog_file)
+            sys.exit(1)
+
+
+    with open(filename, "w") as f:
+        f.write(Template(BLOGTMPL).substitute(
+            title=blog_title
+        ))
+    print("Created %s\n\nHappy Blogging!" % filename)

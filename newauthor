@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import os
+import re
+from string import Template
+import sys
+import yaml
+
+
+AUTHORDIR = "author/"
+AUTHOR_DATA_FILE = "_data/authors.yml"
+AUTHORTMPL = """---
+layout: author
+---
+"""
+
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: ./newauthor <github-username>")
+        sys.exit(1)
+
+    author = sys.argv[1]
+    filename = AUTHORDIR + author + ".md"
+
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            f.write(AUTHORTMPL)
+        print("Created Author page(%s)" % filename)
+    else:
+        print("Author page already exists, ignoring..")
+
+    author_info = yaml.load(open(AUTHOR_DATA_FILE))
+    if author_info.get(author, None) is None:
+        author_info[author] = {
+            "name": author.capitalize(),
+            "site": "",
+            "bio": "",
+            "twitter": ""
+        }
+        with open(AUTHOR_DATA_FILE, 'w') as yaml_file:
+            yaml.dump(author_info, yaml_file, default_flow_style=False)
+
+        print("Updated author information in %s" % AUTHOR_DATA_FILE)
+    else:
+        print("Author information is already "
+              "available in %s, ignoring.." % AUTHOR_DATA_FILE)
+

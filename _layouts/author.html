@@ -1,0 +1,21 @@
+---
+layout: default
+---
+<div class="container">
+    {% assign author = page.url | replace: "/author/", "" %}
+    <header class="post-header">
+        <h1 class="post-title p-name" itemprop="name headline">Blog posts by {{ author }}</h1>
+    </header>
+    <div class="blog-list content">
+        <table>
+            {% for post in site.posts %}
+            {% if post.author == author %}
+            <tr>
+                <td class="date">{{ post.date | date: "%b %d, %Y" }}</td>
+                <td><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
