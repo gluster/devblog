@@ -4,7 +4,7 @@ title: Write for Gluster
 permalink: /write-for-gluster
 ---
 
-Are you interested in write blog post in Gluster devblog? Why wait,
+Are you interested to write a blog post in Gluster dev blog? Why wait,
 clone the [devblog](https://github.com/gluster/devblog) repo and start
 writing. This post will help you to get started.
 
@@ -13,7 +13,7 @@ git clone git@github.com:gluster/devblog.git
 cd devblog
 ```
 
-First time users need to add Author information by running
+First-time users need to add Author information by running
 `./newauthor <github-username>`.
 
 ```
@@ -45,18 +45,18 @@ From this project directory, run `bundle exec jekyll serve
 
 ## Publish
 
-Once the preview is satisfactory, commit the changes and create pull
-request. Once merged, the blog url will be
+Once the preview is satisfactory, commit the changes and create a pull
+request. Once merged, the blog URL will be
 https://gluster.github.com/devblog/my-awesome-blog
 
 ## Editing help
 
-Follow markdown format to write post. Additionally, if images to be
-used in blog, add the image to `$SRC/images` directory and use
+Follow markdown format to write the post. Additionally, if images to be
+used in the blog, add the image to `$SRC/images` directory and use
 relative URL to include that in the post. For example, `![Alt
 Text](images/blog-image.jpg)`
 
-If caption needs to be added to the image then use the following
+If the caption needs to be added to the image then use the following
 syntax.
 
 ```
