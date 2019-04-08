@@ -31,7 +31,7 @@ pre, code {
     border: solid 1px #dce6f0;
 }
 
-pre code{
+code{
     border: 0;
 }
 
@@ -213,4 +213,18 @@ h1, h2, h3, h4{
 }
 .copyright{
     margin-top: 50px;
+}
+
+
+table{
+    margin: 20px 0;
+}
+th{
+  background-color: #eee;
+}
+tr{
+  border-bottom: 1px solid #ddd;
+}
+td, th{
+  padding:3px 10px;
 }
