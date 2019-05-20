@@ -154,4 +154,4 @@ There is indeed a performance improvement seen with gluster-6 for certain worklo
 
 
 
-Hope this data helps in understanding the various improvements and bottlenecks seen in the gluster-6. I am also working on making these tests automated for running  with each new gluster release. Comments and suggestions are welcome.
+Hope this data helps in understanding the various improvements and bottlenecks seen in the gluster-6. I am also working on making these tests automated for running  with each new gluster release [ezio-auditore/pg_bench_test_automation](https://github.com/ezio-auditore/pg_bench_test_automation). Comments and suggestions are welcome.
