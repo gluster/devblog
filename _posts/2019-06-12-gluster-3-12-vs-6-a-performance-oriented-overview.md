@@ -69,7 +69,7 @@ Steps for preparing the test database:-
 
 `bash-4.2$ time pgbench -i -s 4000 pgbench`
 
-### Time required for creating the database (Gluster 3.12 vs Gluster 6) Thinly Provisioned
+### Time required for creating the database (Gluster 3.12 vs Gluster 6) Thinly Provisioned (Lower is better)
 
 `time pgbench -i -s 4000 pgbench`
 
@@ -82,7 +82,7 @@ Steps for preparing the test database:-
 | 6 (without cache-invalidation) | 25m 24.868s |
 | 6 (defaults)                   | 25m 56.818s |
 
-### Time required for creating the database (Gluster 3.12 vs Gluster 6) Preallocated
+### Time required for creating the database (Gluster 3.12 vs Gluster 6) Preallocated (Lower is better)
 
 `time pgbench -i -s 4000 pgbench`
 
@@ -101,9 +101,9 @@ Steps for preparing the test database:-
 ![time-required-to-create-db](images/gluster-3.12vs-6/time-required-to-create-db.png "Time required to create db")
 
 
-*Time taken to create the db seems to be more in gluster-6 still investigating why.*
+*Time taken to create the db seems to be more in gluster-6 still investigating performance improvements.*
 
-Now let us look at some pg-bench results. Have created two disks *(Preallocated & Thinly-Provisioned)* . Added various parameters to check the performance. These volume options are set from ovirt-ui. Before running tests for stat-prefetch have run
+Now let us look at some pg-bench results. Have created two disks *(Preallocated & Thinly-Provisioned)* . Added various parameters to check the performance. These volume options are set from ovirt-ui. Before running tests for pg-bench have run
 `echo 3 > /proc/sys/vm/drop_caches && sync` on the hypervisor hosts.
  
 
@@ -122,17 +122,23 @@ Arguments to pgbench as -c and -t where -c=number of clients , -t= number of tra
 
 The raw data for the below results are located in : [gluster-pg-bench-test-results](https://github.com/ezio-auditore/gluster-pg-bench-test-results)
 
+**Note:** All results are taken as an average of 3 runs.
+
 |------------------------------------------------------------|---------|----------|----------|----------|
 | Gluster ver with/out options<br/>(Thinly Provisioned disk) | 500 tps | 1000 tps | 2000 tps | 4000 tps |
 |:-----------------------------------------------------------|--------:|---------:|---------:|---------:|
 | 3.12                                                       | 792.38  | 432.49   | 407.42   | 353.82   |
 | 6 (cache-invalidation=false)                               | 902.91  | 612.00   | 562.00   | 596.93   |
 | 6 (defaults)                                               | 806.86  | 729.71   | 618.55   | 526.00   |
-| 6 stat-prefetch:off                                        | 544.63  | 455.17   | 443.49   | 437.03   |
-| 6 auto-invalidations:false,stat-prefetch:off               | 714.50  | 623.94   | 587.63   | 524.30   |
 
-**tps**: Transactions per second|------------------------------------------------------------|---------|----------|----------|----------|
 
+**tps**: Transactions per second **Higher is better**
+
+|------------------------------------------------------------|---------|----------|----------|----------|
+| % difference seen from gluster 3.12<br/>(Thinly Provisioned disk) | 500 tps | 1000 tps | 2000 tps | 4000 tps |
+|:-----------------------------------------------------------|--------:|---------:|---------:|---------:|
+| 6 (cache-invalidation=false)                               | +13.88%| +41.15%   | +37%     | +68%     |
+| 6 (defaults)                                               | +1.87% | +68.5%    | +51 %    | +49%     |
 
 ![txn-per-sec-thinly-provisioned](images/gluster-3.12vs-6/txn-per-sec-thinly-provisioned.png "txn-per-sec-thinly-provisioned")
 
@@ -142,10 +148,15 @@ The raw data for the below results are located in : [gluster-pg-bench-test-resul
 | 3.12                                                       | 522.46  | 646.91   | 524.79   | 650.52   |
 | 6 (cache-invalidation=false)                               | 1180.74 | 1021.76  | 890.18   | 995.00   |
 | 6 (defaults)                                               | 1044.89 | 785.81   | 725.06   | 727.44   |
-| 6 stat-prefetch:off                                        | 937.31  | 783.92   | 761.32   | 741.33   |
-| 6 auto-invalidations:false,stat-prefetch:off               | 1100.84 | 793.44   | 757.88   | 727.38   |
 
-**tps**: Transactions per second
+
+**tps**: Transactions per second **Higher is better**
+
+|------------------------------------------------------------|---------|----------|----------|----------|
+| % difference seen from gluster 3.12<br/>(Preallocated)            | 500 tps | 1000 tps | 2000 tps | 4000 tps |
+|:-----------------------------------------------------------|--------:|---------:|---------:|---------:|
+| 6 (cache-invalidation=false)                               | +126%   | +57%     | +69%     | +53%     |
+| 6 (defaults)                                               | +99.97% | +21%     | +38%     | +11.8%   |
 
 ![txn-per-sec-preallocated.png](images/gluster-3.12vs-6/txn-per-sec-preallocated.png "txn-per-sec-preallocated")
 
