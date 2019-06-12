@@ -103,7 +103,7 @@ Steps for preparing the test database:-
 
 *Time taken to create the db seems to be more in gluster-6 still investigating performance improvements.*
 
-Now let us look at some pg-bench results. Have created two disks *(Preallocated & Thinly-Provisioned)* . Added various parameters to check the performance. These volume options are set from ovirt-ui. Before running tests for stat-prefetch have run
+Now let us look at some pg-bench results. Have created two disks *(Preallocated & Thinly-Provisioned)* . Added various parameters to check the performance. These volume options are set from ovirt-ui. Before running tests for pg-bench have run
 `echo 3 > /proc/sys/vm/drop_caches && sync` on the hypervisor hosts.
  
 
@@ -135,12 +135,11 @@ The raw data for the below results are located in : [gluster-pg-bench-test-resul
 **tps**: Transactions per second **Higher is better**
 
 |------------------------------------------------------------|---------|----------|----------|----------|
-| Gluster ver with/out options<br/>(Thinly Provisioned disk) | 500 tps | 1000 tps | 2000 tps | 4000 tps |
+| % difference seen from gluster 3.12<br/>(Thinly Provisioned disk) | 500 tps | 1000 tps | 2000 tps | 4000 tps |
 |:-----------------------------------------------------------|--------:|---------:|---------:|---------:|
 | 6 (cache-invalidation=false)                               | +13.88%| +41.15%   | +37%     | +68%     |
 | 6 (defaults)                                               | +1.87% | +68.5%    | +51 %    | +49%     |
 
-**Change % wrt gluster 3.12**
 ![txn-per-sec-thinly-provisioned](images/gluster-3.12vs-6/txn-per-sec-thinly-provisioned.png "txn-per-sec-thinly-provisioned")
 
 |------------------------------------------------------------|---------|----------|----------|----------|
@@ -154,12 +153,11 @@ The raw data for the below results are located in : [gluster-pg-bench-test-resul
 **tps**: Transactions per second **Higher is better**
 
 |------------------------------------------------------------|---------|----------|----------|----------|
-| Gluster ver with/out options<br/>(Preallocated)            | 500 tps | 1000 tps | 2000 tps | 4000 tps |
+| % difference seen from gluster 3.12<br/>(Preallocated)            | 500 tps | 1000 tps | 2000 tps | 4000 tps |
 |:-----------------------------------------------------------|--------:|---------:|---------:|---------:|
 | 6 (cache-invalidation=false)                               | +126%   | +57%     | +69%     | +53%     |
 | 6 (defaults)                                               | +99.97% | +21%     | +38%     | +11.8%   |
 
-**Change % wrt gluster 3.12**
 ![txn-per-sec-preallocated.png](images/gluster-3.12vs-6/txn-per-sec-preallocated.png "txn-per-sec-preallocated")
 
 There is indeed a performance improvement seen with gluster-6 for certain workloads especially without cache-invalidations, although there is a ~12% performance drop while creating the db.
